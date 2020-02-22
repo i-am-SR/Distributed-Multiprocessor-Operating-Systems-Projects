@@ -1,5 +1,5 @@
 /*
-CSE 531 - Project 2. Submission by Sumit Rawat (ASU ID - 1216225348) and Harsh Virani (ASU ID - 1215137742)
+CSE 531 - Project 2. Submission by Sumit Rawat and Harsh Virani
 
 Running instruction:
 

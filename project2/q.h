@@ -1,108 +1,70 @@
+#include"TCB.h"
 
-typedef struct q_elem
+struct item
 {
-int payload;
-struct q_elem* next;
-struct q_elem* prev;
-}q_elem;
+	struct item *next;
+	struct item *prev;
+	int val;
+};
 
-q_elem* NewItem()
+struct queue
 {
-struct q_elem* new_q=(struct q_elem*)malloc(sizeof(struct q_elem));
-return new_q;
+  	struct TCB_t *head;
+};
+// returns a pointer to a new q-element, uses memory allocation
+struct TCB_t* NewItem()
+{
+	struct TCB_t *item = (struct TCB_t*) malloc(sizeof(struct TCB_t));
+	item->prev = NULL;
+	item->next = NULL;
+	return item;
 }
-
-q_elem* NewQueue()
+// creates a empty queue, that is the header pointer is set to null.
+struct queue* newQueue(struct queue *ReadyQ) 
 {
-struct q_elem* head=NULL;
-return head;
+   	ReadyQ = (struct queue *)malloc(sizeof(struct queue));
+   	ReadyQ->head = NULL;
+   	return ReadyQ;
 }
-
-void AddQueue(struct q_elem** head, struct q_elem* item)
+// adds a queue item, pointed to by “item”, to the queue pointed to by head.
+void AddQueue(struct queue *ReadyQ, struct TCB_t *tcb) 
 {
-if(*head == NULL)
-{
-	item->next=item;
-	item->prev=item;
-	*head=item;
-}
-else
-{
-	struct q_elem* first=*head;
-	item->prev=first->prev;
-	item->next=*head;
-	first->prev->next=item;
-	first->prev=item;
-}
-return;
-}
-
-q_elem* DelQueue(struct q_elem** head)
-{
-if(*head==NULL)
-{
-	printf("ERROR***** The queue is empty!!!\n");
-	return *head;
-}
-else
-{
-	struct q_elem* removed=*head;
-	if(removed->next==removed)
+	if(ReadyQ->head==NULL) 
 	{
-		*head=NULL;
-	}
-	else
+       		ReadyQ->head = tcb;
+       		ReadyQ->head->next = ReadyQ->head;
+       		ReadyQ->head->prev = ReadyQ->head;
+   	}
+	else 
 	{
-	struct q_elem* first=removed->next;
-	*head=first;
-	removed->prev->next=first;
-	first->prev=removed->prev;
-	}
-	removed->next=NULL;
-	removed->prev=NULL; 
-	return removed;
+       		tcb->prev = ReadyQ->head->prev;
+       		tcb->next = ReadyQ->head;
+       		ReadyQ->head->prev->next = tcb; 
+       		ReadyQ->head->prev = tcb;
+   	}
 }
-}
-
-void PrintQ(struct q_elem** head)
+// deletes an item from head and returns a pointer to the deleted item. If the queue is already empty, flag error.
+struct TCB_t* DelQueue(struct queue *ReadyQ) 
 {
-printf("Printing the queue: -\n");
-if(*head==NULL)
-{
-	printf("The queue is empty!!!\n");
-}
-else
-{
-	struct q_elem* node=*head;
-	struct q_elem* curr=*head;
-	printf("%d->",node->payload);
-	while(node->next!=curr)
+	struct TCB_t *removed;
+   	if(ReadyQ->head==NULL)
+      		return NULL;
+   	else 
 	{
-		node=node->next;		
-		printf("%d->",node->payload);
-	}
-	printf("%d",curr->payload);
-	printf("\n");
+      		removed = ReadyQ->head;
+      		if(ReadyQ->head->next == ReadyQ->head)
+         	{
+			printf("ERROR===== The queue is empty!!");			
+			ReadyQ->head = NULL;
+		}
+      		else 
+		{
+      			ReadyQ->head = ReadyQ->head->next;
+      			ReadyQ->head->prev = removed->prev;
+      			removed->prev->next = ReadyQ->head;
+      		}
+      	return removed;
+   	}
 }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
