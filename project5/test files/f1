@@ -1,0 +1,1 @@
+For this project you are to write build clients and one server that does file transfers. The clients can only upload files, and the server accepts file-name and file data from clients and writes them to files.

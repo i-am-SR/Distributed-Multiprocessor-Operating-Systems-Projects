@@ -1,0 +1,1 @@
+All ports are static. The client sends a message to the server port with a “filename” (string) and the file server changes that string to “filename.server”. The client then sends the file data to the server and the server writes the data to the file “filename.server”. (Note: The client may have to tell server file transfer is over).

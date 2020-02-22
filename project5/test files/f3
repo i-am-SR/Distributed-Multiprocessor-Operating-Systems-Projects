@@ -1,0 +1,3 @@
+It is run from the command line, such as
+%  ./a.out 5 f1 f2 f3 f4 f5
+where 5 is the number of clients and f1…f5 are the files to transfer. You can assume the command line will be correct and you do not have to check for its structure (not checking is a security risk, but for this project it is ok).
